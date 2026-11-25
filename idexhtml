@@ -1,1 +1,292 @@
 # KONNEKT-
+<!doctype html>
+<html lang="ht">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07152f">
+<title>KONNEKT</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f2f5fa;color:#13213a;font:16px system-ui}
+header{background:linear-gradient(130deg,#07152f,#17477e);color:white;padding:20px}
+.wrap{max-width:900px;margin:auto}
+.brand{font-size:22px;font-weight:900;letter-spacing:2px}
+.logo{display:inline-grid;place-items:center;background:linear-gradient(135deg,#5ce2ec,#258cff);color:#07142f;border-radius:12px;width:38px;height:38px;margin-right:9px}
+.hero{padding:30px 0 15px}
+.hero h1{font-size:clamp(30px,7vw,48px);margin:8px 0}
+.hero p{color:#d7e5f7}
+.search{display:flex;gap:8px}
+.search input{flex:1;min-width:0;padding:13px;border:0;border-radius:10px}
+.btn{background:#258cff;color:white;border:0;border-radius:10px;padding:12px 15px;font-weight:800}
+main{max-width:900px;margin:22px auto;padding:0 15px}
+h2{font-size:19px}
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.cat,.card{background:white;border:1px solid #e1e8f2;border-radius:14px;padding:14px}
+.cat{text-align:center;cursor:pointer}
+.cat b{display:block;font-size:13px}
+.cat.active{border:2px solid #258cff}
+.ico{font-size:24px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.bar select{padding:9px;border:1px solid #dce4ef;border-radius:9px;background:white}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.tag{font-size:11px;color:#176bd0;background:#eaf3ff;border-radius:20px;padding:5px 8px}
+.card h3{font-size:16px;margin:12px 0 5px}
+.muted{color:#71809a;font-size:13px}
+.card p{font-size:13px}
+.card button{padding:8px 10px;border:1px solid #dce4ef;background:white;border-radius:8px;color:#175ba7;margin-right:5px}
+.fab{position:fixed;right:17px;bottom:17px;border:0;border-radius:30px;background:#258cff;color:white;padding:15px 18px;font-weight:900;box-shadow:0 6px 22px #258cff66}
+dialog{border:0;border-radius:16px;width:min(92%,440px);padding:20px}
+dialog::backdrop{background:#07152faa}
+label{display:block;font-size:13px;font-weight:700;margin:12px 0 5px}
+input,textarea,select{font:inherit}
+dialog input,dialog textarea,dialog select{width:100%;padding:11px;border:1px solid #dce4ef;border-radius:9px}
+textarea{min-height:75px}
+.foot{text-align:center;color:#71809a;font-size:12px;padding:28px}
+@media(min-width:650px){.cats{grid-template-columns:repeat(6,1fr)}}
+</style>
+
+<header>
+<div class="wrap">
+<div class="brand">
+<span class="logo">K</span>KONNEKT
+<select id="lang" style="float:right;padding:8px;border-radius:8px">
+<option value="ht">Kreyòl</option>
+<option value="fr">Français</option>
+<option value="en">English</option>
+</select>
+</div>
+<div class="hero">
+<small id="eyebrow">YON SÈL ESPAS. PLIZYÈ OPÒTINITE.</small>
+<h1 id="headline">Tout Ayiti konekte.</h1>
+<p id="intro">Dekouvri pwodwi, sèvis ak opòtinite toupre ou.</p>
+<div class="search">
+<input id="q" placeholder="Chèche pwodwi, sèvis, anons...">
+<button class="btn" id="search">Chèche</button>
+</div>
+</div>
+</div>
+</header>
+
+<main>
+<div class="bar">
+<h2 id="ctitle">Eksplore kategori yo</h2>
+<span class="muted" id="hint">Chwazi sa w ap chèche</span>
+</div>
+<div class="cats" id="cats"></div>
+
+<div class="bar">
+<div>
+<h2 id="ltitle">Dènye anons yo</h2>
+<div class="muted" id="ls">Egzanp anons pou teste pwototip la.</div>
+</div>
+<select id="dept">
+<option value="">Tout depatman</option>
+<option>Lwès</option>
+<option>Nò</option>
+<option>Sid</option>
+<option>Latibonit</option>
+<option>Sant</option>
+</select>
+</div>
+<div class="cards" id="cards"></div>
+</main>
+
+<div class="foot" id="foot">
+KONNEKT · Premye pwototip entèaktif.
+Anons yo se egzanp, yo pa òf verifye.
+</div>
+
+<button class="fab" id="open">＋ Pibliye yon anons</button>
+
+<dialog id="dlg">
+<form id="form">
+<h2 id="ft">Pibliye yon anons</h2>
+
+<label id="tl">Tit anons lan</label>
+<input id="title" required maxlength="70">
+
+<label id="cl">Kategori</label>
+<select id="category">
+<option value="products">Machandiz</option>
+<option value="services">Sèvis</option>
+<option value="jobs">Travay</option>
+<option value="housing">Lojman</option>
+<option value="delivery">Livrezon</option>
+<option value="notices">Anons</option>
+</select>
+
+<label id="dl">Depatman / zòn</label>
+<input id="area" required placeholder="Egzanp: Lwès — Pòtoprens">
+
+<label id="descl">Deskripsyon</label>
+<textarea id="desc" required maxlength="400"></textarea>
+
+<label id="pl">Telefòn / WhatsApp</label>
+<input id="phone" required placeholder="+509...">
+
+<p>
+<button type="button" id="cancel">Anile</button>
+<button class="btn" id="publish">Pibliye</button>
+</p>
+</form>
+</dialog>
+
+<script>
+const T={
+ht:{
+ey:"YON SÈL ESPAS. PLIZYÈ OPÒTINITE.",
+h:"Tout Ayiti konekte.",
+i:"Dekouvri pwodwi, sèvis ak opòtinite toupre ou.",
+s:"Chèche",ph:"Chèche pwodwi, sèvis, anons...",
+ct:"Eksplore kategori yo",hi:"Chwazi sa w ap chèche",
+lt:"Dènye anons yo",ls:"Egzanp anons pou teste pwototip la.",
+post:"＋ Pibliye yon anons",ft:"Pibliye yon anons",
+tl:"Tit anons lan",cl:"Kategori",dl:"Depatman / zòn",
+descl:"Deskripsyon",pl:"Telefòn / WhatsApp",
+can:"Anile",pub:"Pibliye",all:"Tout depatman",
+empty:"Pa gen anons ki koresponn.",
+cats:["Machandiz","Sèvis","Travay","Lojman","Livrezon","Anons"],
+foot:"KONNEKT · Premye pwototip entèaktif. Anons yo se egzanp, yo pa òf verifye."
+},
+fr:{
+ey:"UN ESPACE. PLUSIEURS OPPORTUNITÉS.",
+h:"Tout Haïti connecté.",
+i:"Découvrez des produits, services et opportunités près de vous.",
+s:"Rechercher",ph:"Produit, service, annonce...",
+ct:"Explorer les catégories",hi:"Choisissez ce que vous cherchez",
+lt:"Dernières annonces",ls:"Exemples pour tester le prototype.",
+post:"＋ Publier une annonce",ft:"Publier une annonce",
+tl:"Titre de l’annonce",cl:"Catégorie",dl:"Département / zone",
+descl:"Description",pl:"Téléphone / WhatsApp",
+can:"Annuler",pub:"Publier",all:"Tous les départements",
+empty:"Aucune annonce correspondante.",
+cats:["Produits","Services","Emplois","Logement","Livraison","Annonces"],
+foot:"KONNEKT · Premier prototype interactif. Annonces fictives, non vérifiées."
+},
+en:{
+ey:"ONE PLACE. MANY OPPORTUNITIES.",
+h:"All Haiti, connected.",
+i:"Discover products, services and opportunities near you.",
+s:"Search",ph:"Products, services, listings...",
+ct:"Explore categories",hi:"Choose what you need",
+lt:"Latest listings",ls:"Sample listings to test the prototype.",
+post:"＋ Post a listing",ft:"Post a listing",
+tl:"Listing title",cl:"Category",dl:"Department / area",
+descl:"Description",pl:"Phone / WhatsApp",
+can:"Cancel",pub:"Publish",all:"All departments",
+empty:"No matching listings.",
+cats:["Products","Services","Jobs","Housing","Delivery","Notices"],
+foot:"KONNEKT · First interactive prototype. Listings are fictional and unverified."
+}
+};
+
+const keys=["products","services","jobs","housing","delivery","notices"];
+const icons=["🛍️","🛠️","💼","🏠","🚚","📢"];
+
+let lang="ht",active="",items=[
+{title:"Telefòn Samsung an bon eta",cat:"products",area:"Lwès · Pòtoprens",desc:"Egzanp anons. Kontakte vandè a pou plis detay.",phone:"+509 0000-0000"},
+{title:"Elektrisyen disponib",cat:"services",area:"Lwès · Kèskòf",desc:"Egzanp sèvis reparasyon ak enstalasyon.",phone:"+509 0000-0000"},
+{title:"Opòtinite travay — Asistan",cat:"jobs",area:"Lwès · Pòtoprens",desc:"Egzanp anons travay. Verifye detay yo.",phone:"+509 0000-0000"}
+];
+
+const $=x=>document.getElementById(x);
+
+function draw(){
+let t=T[lang];
+$("eyebrow").textContent=t.ey;
+$("headline").textContent=t.h;
+$("intro").textContent=t.i;
+$("search").textContent=t.s;
+$("q").placeholder=t.ph;
+$("ctitle").textContent=t.ct;
+$("hint").textContent=t.hi;
+$("ltitle").textContent=t.lt;
+$("ls").textContent=t.ls;
+$("open").textContent=t.post;
+$("ft").textContent=t.ft;
+$("tl").textContent=t.tl;
+$("cl").textContent=t.cl;
+$("dl").textContent=t.dl;
+$("descl").textContent=t.descl;
+$("pl").textContent=t.pl;
+$("cancel").textContent=t.can;
+$("publish").textContent=t.pub;
+$("dept").options[0].textContent=t.all;
+$("foot").textContent=t.foot;
+
+$("category").innerHTML=keys.map((k,i)=>
+`<option value="${k}">${t.cats[i]}</option>`).join("");
+
+$("cats").innerHTML=keys.map((k,i)=>
+`<div class="cat ${active===k?'active':''}" data-k="${k}">
+<div class="ico">${icons[i]}</div><b>${t.cats[i]}</b></div>`).join("");
+
+document.querySelectorAll(".cat").forEach(n=>n.onclick=()=>{
+active=active===n.dataset.k?"":n.dataset.k;
+draw()
+});
+
+let q=$("q").value.toLowerCase(),d=$("dept").value;
+let found=items.filter(x=>
+(!active||x.cat===active)&&
+(!d||x.area.includes(d))&&
+(x.title+x.desc+x.area).toLowerCase().includes(q));
+
+$("cards").innerHTML=found.length?
+found.map(x=>`
+<article class="card">
+<span class="tag">${t.cats[keys.indexOf(x.cat)]}</span>
+<h3>${safe(x.title)}</h3>
+<p>${safe(x.desc)}</p>
+<div class="muted">📍 ${safe(x.area)}<br>☎ ${safe(x.phone)}</div>
+<p>
+<button onclick="share('${encodeURIComponent(x.title)}')">↗ ${lang==='fr'?'Partager':lang==='en'?'Share':'Pataje'}</button>
+<button onclick="contact('${encodeURIComponent(x.phone)}')">${lang==='fr'?'Contacter':lang==='en'?'Contact':'Kontakte'}</button>
+</p>
+</article>`).join(""):`<div class="card">${t.empty}</div>`;
+}
+
+function safe(s){
+return String(s).replace(/[&<>"']/g,c=>
+({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+$("lang").onchange=e=>{lang=e.target.value;draw()};
+$("q").oninput=draw;
+$("search").onclick=draw;
+$("dept").onchange=draw;
+$("open").onclick=()=>$("dlg").showModal();
+$("cancel").onclick=()=>$("dlg").close();
+
+$("form").onsubmit=e=>{
+e.preventDefault();
+items.unshift({
+title:$("title").value,
+cat:$("category").value,
+area:$("area").value,
+desc:$("desc").value,
+phone:$("phone").value
+});
+$("form").reset();
+$("dlg").close();
+active="";
+draw();
+};
+
+function share(t){
+let title=decodeURIComponent(t);
+if(navigator.share)
+navigator.share({title:"KONNEKT",text:title,url:location.href});
+else alert(title);
+}
+
+function contact(p){
+let n=decodeURIComponent(p).replace(/\D/g,"");
+if(n.length>=8)location.href="https://wa.me/"+n;
+else alert("Nimewo egzanp.");
+}
+
+draw();
+</script>
+</html>
